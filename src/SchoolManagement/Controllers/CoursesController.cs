@@ -35,6 +35,8 @@ namespace SchoolManagement.Controllers
 
             var course = await _context.Courses
                 .Include(c => c.TeachedBy)
+                .Include(c => c.Participations)
+                .ThenInclude(c => c.Student)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (course == null)
             {

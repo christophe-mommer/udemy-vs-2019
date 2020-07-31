@@ -10,23 +10,33 @@
     <h4>Course</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Hours)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Hours)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TeachedBy)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TeachedBy.Id)
+        </dd>
+        <dt class="col-sm-2">
+            Promo major
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var maxGrade = Model.Participations.Where(p => p.CourseId == Model.Id).Max(p => p.Notation);
+                var participation = Model.Participations.Where(p => p.CourseId == Model.Id && p.Notation == maxGrade).First();
+                @Html.Raw(participation.Student.Name + " " + participation.Student.LastName);
+            }
         </dd>
     </dl>
 </div>

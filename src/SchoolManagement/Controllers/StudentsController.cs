@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,7 +22,28 @@ namespace SchoolManagement.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
+            var students = await _context.Students.Include(s => s.Courses).ToListAsync();
+            Dictionary<int, List<int>> courseNotes
+                = new Dictionary<int, List<int>>();
+            var o = new object();
+            Parallel.ForEach(students, s =>
+            {
+                foreach (var item in s.Courses)
+                {
+                    lock (o)
+                    {
+                        if (courseNotes.ContainsKey(item.CourseId))
+                        {
+                            courseNotes[item.CourseId].Add(item.Notation);
+                        }
+                        else
+                        {
+                            courseNotes[item.CourseId] = new List<int> { item.Notation };
+                        }
+                    }
+                }
+            });
+            return View(students);
         }
 
         // GET: Students/Details/5
@@ -33,7 +55,10 @@ namespace SchoolManagement.Controllers
             }
 
             var student = await _context.Students
+                .Include(s => s.Courses)
+                .ThenInclude(s => s.Course)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (student == null)
             {
                 return NotFound();

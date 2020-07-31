@@ -10,17 +10,58 @@
     <h4>Student</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LastName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LastName)
+        </dd>
+    </dl>
+    <dl class="row">
+        @*@foreach (var course in Model.Courses)
+        {
+            <dt class="col-sm-2">
+                @course.Course.Name grade
+            </dt>
+            <dd class="col-sm-10">
+                @course.Notation
+            </dd>
+        }*@
+        <dt class="col-sm-2">
+            C# grade
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.Courses.FirstOrDefault(c => c.CourseId == 1).Notation)
+        </dd>
+        <dt class="col-sm-2">
+            WPF grade
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.Courses.FirstOrDefault(c => c.CourseId == 2).Notation)
+        </dd>
+        <dt class="col-sm-2">
+            ASP.NET grade
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.Courses.FirstOrDefault(c => c.CourseId == 3).Notation)
+        </dd>
+        <dt class="col-sm-2">
+            EF Core grade
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.Courses.FirstOrDefault(c => c.CourseId == 4).Notation)
+        </dd>
+        <dt class="col-sm-2">
+            Azure grade
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.Courses.FirstOrDefault(c => c.CourseId == 5).Notation)
         </dd>
     </dl>
 </div>

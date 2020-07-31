@@ -10,17 +10,33 @@
     <h4>Teacher</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Lastname)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Lastname)
+        </dd>
+
+        <dt class="col-sm-2">
+            Teached courses :
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                if (Model.TeachedCourses?.Any() == true)
+                {
+                    @Html.Raw(string.Join(", ", Model.TeachedCourses.Select(c => c.Name)));
+                }
+                else
+                {
+                    @Html.Raw("None");
+                }
+            }
         </dd>
     </dl>
 </div>

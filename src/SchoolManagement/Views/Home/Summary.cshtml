@@ -1,0 +1,15 @@
+﻿@model SummaryViewModel
+@{
+    ViewData["Title"] = "Summary";
+}
+
+<div class="text-center">
+    <h1 class="display-4">School Summary</h1>
+    <p>Actually, there is @Model.NbStudents students</p>
+    <p>Actually, there is @Model.NbTeachers teachers</p>
+    <p>Actually, there is @Model.NbCourses courses</p>
+    @foreach (var item in Model.AverageByCourse)
+    {
+        <p>Average notation for course @item.Key is @item.Value.ToString(".00")</p>
+    }
+</div>

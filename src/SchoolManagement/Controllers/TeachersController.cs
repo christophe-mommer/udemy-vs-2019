@@ -21,7 +21,12 @@ namespace SchoolManagement.Controllers
         // GET: Teachers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Teachers.ToListAsync());
+            var dbTeachers = await _context.Teachers.ToListAsync();
+            var teachers = new List<Teacher>();
+
+            dbTeachers.OrderBy(t => t.Name).ToList();
+
+            return View(teachers);
         }
 
         // GET: Teachers/Details/5
@@ -32,8 +37,7 @@ namespace SchoolManagement.Controllers
                 return NotFound();
             }
 
-            var teacher = await _context.Teachers
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Teacher teacher = await FindTeacherByIdAsync(id);
             if (teacher == null)
             {
                 return NotFound();
@@ -148,5 +152,12 @@ namespace SchoolManagement.Controllers
         {
             return _context.Teachers.Any(e => e.Id == id);
         }
+
+        private async Task<Teacher> FindTeacherByIdAsync(int? id)
+        {
+            return await _context.Teachers
+                            .FirstOrDefaultAsync(m => m.Id == id);
+        }
+
     }
 }
